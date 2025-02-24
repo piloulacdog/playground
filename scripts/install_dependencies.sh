@@ -19,7 +19,6 @@ chmod 755 $GITHUB_WORKSPACE/osv-scanner/osv-scanner
 
 # Install Python and pip (for Python dependencies)
 echo "Installing Python..."
-apt-get update
-apt-get install -y python3 python3-pip
+echo "$(python3 --version)"
 
 echo "Installation of dependencies complete."
