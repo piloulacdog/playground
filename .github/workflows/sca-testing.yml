@@ -45,7 +45,7 @@ jobs:
 
       - name: Upload SBOMs using Datadog CI
         working-directory: ./sca-testing-react
-        run: ./scripts/upload_sboms.sh
+        run: ../scripts/upload_sboms.sh
         env:
           DD_SITE: ${{ secrets.DD_SITE }}
           DD_API_KEY: ${{ secrets.DD_API_KEY }}
