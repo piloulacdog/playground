@@ -30,7 +30,9 @@ for file in "$SBOM_DIR"/*; do
         echo "Current commit SHA: $CURRENT_SHA"
 
         # Upload SBOM file using datadog-ci
+        export GIT_DIR="$TARGET_DIR/.git"
         datadog-ci sbom upload "$file"
+        unset GIT_DIR
         
         echo "Successfully uploaded: $file."
     fi
