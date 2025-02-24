@@ -4,6 +4,7 @@ set -e  # Exit on error
 
 echo "Uploading SBOMs..."
 echo "### Generated SBOM and associated SHA:" >> $GITHUB_STEP_SUMMARY
+cd $TARGET_DIR
 
 # Iterate over all SBOM files in /tmp/sboms
 for file in "$SBOM_DIR"/*; do

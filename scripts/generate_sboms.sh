@@ -2,6 +2,8 @@
 
 set -e  # Exit on error
 
+cd $TARGET_DIR
+
 echo "Generating SBOMs..."
 
 # Define SBOM output directory
