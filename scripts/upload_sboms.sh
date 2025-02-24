@@ -7,8 +7,12 @@ echo "Uploading SBOMs..."
 # Iterate over all SBOM files in /tmp/sboms
 for file in "$SBOM_DIR"/*; do
     if [[ -f "$file" ]]; then
-        # Generate a unique identifier for the file (commit SHA + file hash)
-        git commit --allow-empty -m "SCA testing upload $file"
+        # Generate unique SHAs even if the same repo + commit is compared twice, that is irrelevant here
+        LAST_COMMITTER_NAME=$(git log -1 --pretty=format:'%an')
+        LAST_COMMITTER_EMAIL=$(git log -1 --pretty=format:'%ae')
+        git config --global user.email "$LAST_COMMITTER_EMAIL"
+        git config --global user.name "$LAST_COMMITTER_NAME"
+        git commit --amend --no-edit
 
         echo "Uploading SBOM: $file"
 
