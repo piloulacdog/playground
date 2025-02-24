@@ -1,0 +1,25 @@
+name: E2E test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  read-config-and-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Read Config File and Trigger Workflows
+        run: |
+          if [ -f repositories.txt ]; then
+            echo "Found repositories.txt, reading..."
+            while IFS= read -r repo; do
+              echo "Triggering workflow for $repo"
+              gh workflow run sca-testing.yml -f repo="$repo"
+            done < repositories.txt
+          else
+            echo "No config file found, exiting."
+          fi
+        # env:
+        #   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
