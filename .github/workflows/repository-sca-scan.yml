@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: SCA testing
+name: Repository SCA Scan
 
 # Controls when the workflow will run
 on:
@@ -15,7 +15,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   sca-testing:
-    name: SCA Testing (${{ inputs.repo }})
+    name: Repository SCA scan (${{ inputs.repo }})
     runs-on: ubuntu-latest
     env:
       SBOM_DIR: /tmp/sboms  # Define global SBOM directory
@@ -28,25 +28,20 @@ jobs:
 
       - name: Setup job summary
         run: |
-          echo "## 🔍 SBOM Extraction" >> $GITHUB_STEP_SUMMARY
+          echo "## Repository SCA Scan" >> $GITHUB_STEP_SUMMARY
           echo "**Repository:** \`${{ inputs.repo }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**RFC**: [View RFC](https://docs.google.com/document/d/1bh9TLFB0AjGh17mj_C1KOmLYJw9RY_iUhox7Pk-yeU8/edit?pli=1&tab=t.0#heading=h.rnd972k0hiye)" >> $GITHUB_STEP_SUMMARY
 
-      - name: Clone remote repository
-        run: git clone ${{ inputs.repo }} $TARGET_DIR
-
-      - name: Move Git references
-        run: mv .git /tmp/git-backup
-
       - name: Install dependencies
-        working-directory: /tmp/target_repository
         run: $GITHUB_WORKSPACE/scripts/install_dependencies.sh
 
+      - name: Clone remote repository
+        run: git clone https://github.com/${{ inputs.repo }}.git $TARGET_DIR
+
       - name: Generate SBOMs
-        run: ./scripts/generate_sboms.sh
+        run: $GITHUB_WORKSPACE/scripts/generate_sboms.sh
 
       - name: Upload SBOMs using Datadog CI
-        working-directory: /tmp/target_repository
         run: $GITHUB_WORKSPACE/scripts/upload_sboms.sh
         env:
           DD_SITE: ${{ secrets.DD_SITE }}

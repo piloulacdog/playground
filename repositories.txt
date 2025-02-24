@@ -1,2 +1,1 @@
-https://github.com/piloulacdog/jest
-https://github.com/muh-nee/sca-testing-react
+muh-nee/sca-testing-react

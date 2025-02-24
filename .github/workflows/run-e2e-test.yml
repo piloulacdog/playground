@@ -1,4 +1,4 @@
-name: E2E test
+name: Run SCA E2E test
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
             echo "Found repositories.txt, reading..."
             while IFS= read -r repo; do
               echo "Triggering workflow for $repo"
-              gh workflow run sca-testing.yml -f repo="$repo"
+              gh workflow run repository-sca-scan.yml -f repo="$repo"
             done < repositories.txt
           else
             echo "No config file found, exiting."
