@@ -23,10 +23,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Add input parameter to job summary
+      - name: Setup job summary
         run: |
           echo "## 🔍 SBOM Extraction" >> $GITHUB_STEP_SUMMARY
           echo "**Repository:** \`${{ inputs.repo }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**RFC**: [View RFC](https://docs.google.com/document/d/1bh9TLFB0AjGh17mj_C1KOmLYJw9RY_iUhox7Pk-yeU8/edit?pli=1&tab=t.0#heading=h.rnd972k0hiye)" >> $GITHUB_STEP_SUMMARY
 
       - name: Install Dependencies
         run: ./scripts/install_dependencies.sh
