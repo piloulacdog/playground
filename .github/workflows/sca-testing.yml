@@ -39,12 +39,6 @@ jobs:
           git clone ${{ inputs.repo }}
           cd $(basename ${{ inputs.repo }})
           echo "TARGET_DIR=$(pwd)" >> $GITHUB_ENV
-          # Check if we're in the correct git repository (foo)
-          echo "Current directory: $(pwd)"
-          CURRENT_REPO=$(git remote get-url origin)
-          echo "Current repository: $CURRENT_REPO"
-          CURRENT_SHA=$(git rev-parse HEAD)
-          echo "Current commit SHA: $CURRENT_SHA"
 
       - name: Generate SBOMs
         run: ./scripts/generate_sboms.sh
@@ -52,7 +46,7 @@ jobs:
       - name: Upload SBOMs using Datadog CI
         run: ./scripts/upload_sboms.sh
         env:
-          DD_SITE: "datad0g.com"
+          DD_SITE: ${{ secrets.DD_SITE }}
           DD_API_KEY: ${{ secrets.DD_API_KEY }}
           DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
         
@@ -60,5 +54,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sbom-artifacts
-          path: /tmp/sboms
+          path: $SBOM_DIR
 
