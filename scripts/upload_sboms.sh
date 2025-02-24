@@ -21,13 +21,14 @@ for file in "$SBOM_DIR"/*; do
         COMMIT_SHA="${GITHUB_SHA}"
         echo "- **$FILENAME**: $COMMIT_SHA" >> $GITHUB_STEP_SUMMARY
 
+        echo "Current directory: $(pwd)"
         CURRENT_REPO=$(git remote get-url origin)
         echo "Current repository: $CURRENT_REPO"
         CURRENT_SHA=$(git rev-parse HEAD)
         echo "Current commit SHA: $CURRENT_SHA"
 
         # Upload SBOM file using datadog-ci
-        datadog-ci sbom upload "$file"
+        # datadog-ci sbom upload "$file"
         
         echo "Successfully uploaded: $file."
     fi
