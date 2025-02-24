@@ -31,6 +31,12 @@ jobs:
           echo "## Repository SCA Scan" >> $GITHUB_STEP_SUMMARY
           echo "**Repository:** \`${{ inputs.repo }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**RFC**: [View RFC](https://docs.google.com/document/d/1bh9TLFB0AjGh17mj_C1KOmLYJw9RY_iUhox7Pk-yeU8/edit?pli=1&tab=t.0#heading=h.rnd972k0hiye)" >> $GITHUB_STEP_SUMMARY
+          echo "### Job Summary:" >> $GITHUB_STEP_SUMMARY
+          echo "This job performs a Software Composition Analysis (SCA) scan on a specified repository." >> $GITHUB_STEP_SUMMARY
+          echo "- Clones the target repository and installs necessary dependencies." >> $GITHUB_STEP_SUMMARY
+          echo "- Generates a Software Bill of Materials (SBOM) using a set of generation tools." >> $GITHUB_STEP_SUMMARY
+          echo "- Uploads the generated SBOMs using datadog-ci to sca-api." >> $GITHUB_STEP_SUMMARY
+          echo "- Saves the SBOM artifacts for manual analysis if necessary." >> $GITHUB_STEP_SUMMARY
 
       - name: Install dependencies
         run: $GITHUB_WORKSPACE/scripts/install_dependencies.sh

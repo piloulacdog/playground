@@ -5,7 +5,7 @@ set -e  # Exit on error
 cd $TARGET_DIR
 
 echo "Uploading SBOMs..."
-echo "### Generated SBOM and associated SHA:" >> $GITHUB_STEP_SUMMARY
+echo "### Generated SBOMs and associated SHA:" >> $GITHUB_STEP_SUMMARY
 
 # Iterate over all SBOM files in /tmp/sboms
 for file in "$SBOM_DIR"/*; do
