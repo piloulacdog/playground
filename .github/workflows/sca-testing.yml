@@ -20,13 +20,31 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Add input parameter to job summary
         run: |
           echo "## 🔍 SBOM Extraction" >> $GITHUB_STEP_SUMMARY
           echo "**Repository:** \`${{ inputs.repo }}\`" >> $GITHUB_STEP_SUMMARY
 
-      - name: Clone Public Remote Repository
+      - name: Install Dependencies
+        run: ./install_dependencies.sh
+
+      - name: Clone Remote Repository
         run: |
           git clone ${{ inputs.repo }}
           cd $(basename ${{ inputs.repo }})
-          ls  # Just for debugging
+
+      - name: Generate SBOMs
+        run: ./generate_sboms.sh
+
+      - name: Upload SBOMs using Datadog CI
+        run: ./upload_sboms.sh
+        
+      - name: Save SBOM artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-artifacts
+          path: /tmp/sboms
+
