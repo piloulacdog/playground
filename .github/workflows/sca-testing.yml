@@ -44,6 +44,7 @@ jobs:
         run: ./scripts/generate_sboms.sh
 
       - name: Upload SBOMs using Datadog CI
+        working-directory: $TARGET_DIR
         run: ./scripts/upload_sboms.sh
         env:
           DD_SITE: ${{ secrets.DD_SITE }}
