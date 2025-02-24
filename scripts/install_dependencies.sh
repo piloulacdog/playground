@@ -12,10 +12,10 @@ echo "Installing DataDog SBOM generator..."
 DATADOG_OSV_SCANNER_URL=https://github.com/DataDog/osv-scanner/releases/latest/download/osv-scanner_linux_amd64.zip
 
 # Install OSV Scanner
-mkdir /osv-scanner
-curl -L -o /osv-scanner/osv-scanner.zip $DATADOG_OSV_SCANNER_URL
-unzip /osv-scanner/osv-scanner.zip -d /osv-scanner
-chmod 755 /osv-scanner/osv-scanner
+mkdir -p $GITHUB_WORKSPACE/osv-scanner
+curl -L -o $GITHUB_WORKSPACE/osv-scanner/osv-scanner.zip $DATADOG_OSV_SCANNER_URL
+unzip $GITHUB_WORKSPACE/osv-scanner/osv-scanner.zip -d $GITHUB_WORKSPACE/osv-scanner
+chmod 755 $GITHUB_WORKSPACE/osv-scanner/osv-scanner
 
 # Install Python and pip (for Python dependencies)
 echo "Installing Python..."
