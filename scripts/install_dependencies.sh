@@ -2,6 +2,8 @@
 
 set -e  # Exit on error
 
+echo "Installing dependencies..."
+
 # Install Datadog CLI
 echo "Installing Datadog CLI..."
 npm install -g @datadog/datadog-ci
@@ -17,8 +19,6 @@ curl -L -o $GITHUB_WORKSPACE/osv-scanner/osv-scanner.zip $DATADOG_OSV_SCANNER_UR
 unzip $GITHUB_WORKSPACE/osv-scanner/osv-scanner.zip -d $GITHUB_WORKSPACE/osv-scanner
 chmod 755 $GITHUB_WORKSPACE/osv-scanner/osv-scanner
 
-# Install Python and pip (for Python dependencies)
-echo "Installing Python..."
-echo "$(python3 --version)"
+echo "Installed Python version: $(python3 --version)"
 
 echo "Installation of dependencies complete."

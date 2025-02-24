@@ -17,6 +17,8 @@ jobs:
   sca-testing:
     name: SCA Testing (${{ inputs.repo }})
     runs-on: ubuntu-latest
+    env:
+      SBOM_DIR: /tmp/sboms  # Define global SBOM directory
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -29,10 +31,10 @@ jobs:
           echo "**Repository:** \`${{ inputs.repo }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**RFC**: [View RFC](https://docs.google.com/document/d/1bh9TLFB0AjGh17mj_C1KOmLYJw9RY_iUhox7Pk-yeU8/edit?pli=1&tab=t.0#heading=h.rnd972k0hiye)" >> $GITHUB_STEP_SUMMARY
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: ./scripts/install_dependencies.sh
 
-      - name: Clone Remote Repository
+      - name: Clone remote repository
         run: |
           git clone ${{ inputs.repo }}
           cd $(basename ${{ inputs.repo }})
