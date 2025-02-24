@@ -6,6 +6,10 @@ name: SCA testing
 on:
   workflow_call:  # Enables this workflow to be called by other workflows
   workflow_dispatch:  # Allows manual triggering
+    inputs:
+      repo:
+        description: 'GitHub repository to scan (e.g., owner/repo)'
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,18 +20,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
       - name: Clone Public Remote Repository
-        run: git clone https://github.com/piloulacdog/react.git
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          git clone ${{ inputs.repo }}
+          cd $(basename ${{ inputs.repo }})
+          ls  # Just for debugging
