@@ -2,7 +2,7 @@
 
 set -e  # Exit on error
 
-cd $TARGET_DIR
+# cd $TARGET_DIR
 
 echo "Uploading SBOMs..."
 echo "### Generated SBOM and associated SHA:" >> $GITHUB_STEP_SUMMARY
@@ -23,14 +23,15 @@ for file in "$SBOM_DIR"/*; do
         COMMIT_SHA="${GITHUB_SHA}"
         echo "- **$FILENAME**: $COMMIT_SHA" >> $GITHUB_STEP_SUMMARY
 
+        export GIT_DIR="$TARGET_DIR/.git"
         echo "Current directory: $(pwd)"
+        echo "GIT_DIR: $GIT_DIR"
         CURRENT_REPO=$(git remote get-url origin)
         echo "Current repository: $CURRENT_REPO"
         CURRENT_SHA=$(git rev-parse HEAD)
         echo "Current commit SHA: $CURRENT_SHA"
 
         # Upload SBOM file using datadog-ci
-        export GIT_DIR="$TARGET_DIR/.git"
         datadog-ci sbom upload "$file"
         unset GIT_DIR
         
