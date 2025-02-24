@@ -44,6 +44,10 @@ jobs:
 
       - name: Upload SBOMs using Datadog CI
         run: ./scripts/upload_sboms.sh
+        env:
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+          DD_APP_KEY: ${{ secrets.DD_APP_KEY }}
+          DD_SITE: "datad0g.com"
         
       - name: Save SBOM artifacts
         uses: actions/upload-artifact@v4
