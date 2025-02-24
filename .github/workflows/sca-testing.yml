@@ -15,11 +15,16 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   sca-testing:
-    # The type of runner that the job will run on
+    name: SCA Testing (${{ inputs.repo }})
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Add input parameter to job summary
+        run: |
+          echo "## 🔍 SBOM Extraction" >> $GITHUB_STEP_SUMMARY
+          echo "**Repository:** \`${{ inputs.repo }}\`" >> $GITHUB_STEP_SUMMARY
+
       - name: Clone Public Remote Repository
         run: |
           git clone ${{ inputs.repo }}
